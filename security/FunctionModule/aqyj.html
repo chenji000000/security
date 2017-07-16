@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>安全预警</title>
+    <script src="../js/mui.min.js"></script>
+   
+    <script src="../js/common.js"></script>
+    <script src="../js/mui.js"></script>
+    <script src="../js/jquery-1.11.1.min.js"></script>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="UTF-8">
+      	 mui.init({
+   pullRefresh : {
+     container:"#refreshContainer",//下拉刷新容器标识，querySelector能定位的css选择器均可，比如：id、.class等
+     down : {
+       contentdown : "下拉可以刷新",//可选，在下拉可刷新状态时，下拉刷新控件上显示的标题内容
+       contentover : "释放立即刷新",//可选，在释放可刷新状态时，下拉刷新控件上显示的标题内容
+       contentrefresh : "正在刷新...",//可选，正在刷新状态时，下拉刷新控件上显示的标题内容
+       callback :pullfresh //必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+     }
+   }
+
+});
+
+      	
+      	 mui.plusReady(function(){
+      		 	
+      		 });
+      	function pullfresh() {
+  
+}
+
+//用来处理列表数据的函数
+    function listDataAnalyze(data){
+   var arrayObj = data.T1348647853363;
+   for(var i = 0; i<arrayObj.length;i++){
+    finalList = '<li class="mui-table-view-cell mui-media" id="list-cell"><a href="detail.html"'+arrayObj[i].id+'"><img class="mui-media-object mui-pull-left" src='+arrayObj[i].img+'><div class="mui-media-body">'+arrayObj[i].title+'<p class="mui-ellipsis">'+arrayObj[i].digest+'</div></a></li>';
+    $("#tableView-List").append(finalList);
+   }
+    }
+
+  
+    </script>
+    <style type="text/css">
+    	
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+	    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+	    <h1 class="mui-title">安全预警</h1>
+	</header>
+	
+	
+
+		<!--下拉刷新容器-->
+ <div id="refreshContainer" class="mui-content mui-scroll-wrapper">
+   <div class="mui-scroll">
+     <!--数据列表-->
+     <form class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						记住密码
+						<div class="mui-pull-right">
+							<label>23</label>
+						</div>
+					</li>
+				</ul>
+			</form>
+   </div>
+</div>
+	
+	
+	<script>
+		    
+		    	if (!window.WebSocket) { 
+                alert("WebSocket not supported by this browser!"); 
+            } 
+             var ws;
+      		 	ws=new WebSocket("ws://180.153.70.139:5006");
+      		 	ws.onmessage = function(event) { 
+                        console.log(event.data);
+//                  if (event.data.msgType == 1) {
+//                  	console.log(event.data);
+//                  }
+                }; 
+                 ws.onclose = function(event) {  
+                 	alert("onclose");
+                };
+                 ws.onopen = function(event) { 
+                   //WebSocket Status:: Socket Open
+                    //// 发送一个初始化消息
+                     
+//                  alert("onopen");
+                    ws.send("{\"key\":\"client_bind\",\"timestamp\":1461312678523,\"sendType\":\"3\",\"data\":{\"deviceModel\":\"Google Chrome\",\"account\":\"admin\",\"channel\":\"Chrome\",\"deviceId\":\"Google Chrome 38.0.2125.101 m\",\"permissionLevel\":\"200\"}}");
+//                  ws.send("{\"key\":\"client_bind\",\"sendType\":\"1\",\"receiver\":\"null\",\"timestamp\":\"1461319030\",\"data\":{\"deviceModel\":\"iPhone\",\"channel\":\"IOS\",\"account\":\"admin\",\"deviceId\":\"AD7625E7-2619-4140-92B6-2E931E48314C\"}}");
+                };
+                 ws.onerror =function(event){
+                 	alert("cuo wu");
+                 	console.log('Client received a message',event);
+                    //WebSocket Status:: Error was reported
+                    
+                };
+		    
+		    /* 
+      		  */
+	</script>
+</body>
+</html>

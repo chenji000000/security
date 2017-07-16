@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <title></title>
+    <script src="js/mui.min.js"></script>
+    <script src="js/mui.js"></script>
+    <script src="js/jquery.js"></script>
+    <!--<script s"></script>-->
+    <script src="js/common.js"></script>
+    <script src="js/update.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/URL.js"></script>
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <script type="text/javascript" charset="utf-8">
+      
+   
+
+    </script>
+    <style type="text/css">
+    .mui-input-group{
+    	margin-top: 10px;
+    }
+    	.link-area{
+    		text-align: center;
+    	}
+    	
+    </style>
+</head>
+<body>
+	<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">登录</h1>
+		</header>
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入账号">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+			</form>
+			<form class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						自动登录
+						<div id="autoLogin" class="mui-switch mui-active">
+							<div  class="mui-switch-handle "></div>
+						</div>
+					</li>
+				</ul>
+			</form>
+			<form class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						记住密码
+						<div id="remberMM"  class="mui-switch mui-active">
+							<div  class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary" onclick="loginclick()">登录</button>
+				<div class="link-area"><a id='reg'>注册账号</a> <span class="spliter">|</span> <a id='forgetPassword'>忘记密码</a>
+				</div>
+			</div>
+			<div class="mui-content-padded oauth-area">
+
+			</div>
+		</div>
+		
+		
+
+		<script>
+		
+		var loginName = document.getElementById('account');
+		var passWord = document.getElementById('password');
+		if (localStorage.getItem("userName")) {
+			loginName.value = localStorage.getItem("userName")
+			passWord.value = localStorage.getItem("passWord")
+		}
+		var remberMM = document.getElementById("remberMM").classList.contains("mui-active");
+		
+	  document.getElementById("remberMM").addEventListener("toggle",function(event){
+          if(event.detail.isActive){
+          	remberMM = true;
+       }else{
+       	remberMM = false;
+       }
+       
+         })
+		
+		
+		
+		function loginclick(){
+			$.ajax({
+				data:{loginName : loginName.value,
+                      passWord : passWord.value,
+                      checkType : 0,
+                      argLeaseType:1},
+                dataType:'text',//服务器返回json格式数据
+                url:URL + "Login",
+               
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						
+						var jsondata1 = jsondatastr(data)
+						console.log(data)
+//						alert(data);
+ 						//alert(jsondata1.Result)
+						if (jsondata1.Result == 1) {
+							if (remberMM) {
+								//信息本地存储
+							window.localStorage.setItem("userName", loginName.value);
+							window.localStorage.setItem("passWord", passWord.value);
+							$.ajax({
+				data:{argLoginName : localStorage.getItem("userName"),
+                      argFilterNoPermissions : "True",
+                      argUserType : 2,
+				},
+                dataType:'text',//服务器返回json格式数据
+                url:URL + "GetPermissionFullByLoginName",
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						
+						var jsondata1 = jsondatastr(data)
+						console.log(data)
+//						alert(data);
+ 						//alert(jsondata1.Result)
+						if (jsondata1.Result == 1) {
+							
+								//信息本地存储
+							
+							window.localStorage.setItem("权限", jsondata1);
+						}
+					},
+				error:function(xhr,type,errorThrown){
+							//异常处理；
+				console.log(errorThrown);
+				}
+				
+			});
+			
+							}
+							clicked('tab-footer.html',false,false)
+						}
+					},
+				error:function(xhr,type,errorThrown){
+							//异常处理；
+				console.log(errorThrown);
+				}
+				
+			});
+			
+		}
+
+
+	
+		</script>
+		
+</body>
+</html>

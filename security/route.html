@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<script src="js/mui.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style type="text/css">
+			body,
+			html {
+				width: 100%;
+				height: 100%;
+				margin: 0;
+				font-family: "微软雅黑";
+			}
+			
+			#allmap {
+				height: 500px;
+				width: 100%;
+			}
+			
+			#r-result {
+				width: 100%;
+			}
+		</style>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=oN9K9KjYSeWbxsgalZDg82gNBt8CzGYP"></script>
+		<script src="js/URL.js"></script>
+		<script type="text/javascript" charset="UTF-8">
+			mui.init();
+		</script>
+	</head>
+
+	<body>
+		<div id="allmap"></div>
+		<div id="r-result">
+			<input type="button" onclick="play();" value="添加覆盖物" />
+			<input type="button" onclick="remove_overlay();" value="删除覆盖物" />
+		</div>
+
+	</body>
+	<script>
+		// 百度地图API功能
+		var map = new BMap.Map("allmap");
+		var point = new BMap.Point(113.80432101121, 34.725600476923);
+		map.centerAndZoom(point, 15);
+		
+		var mycars=new Array();
+var timer; //定时器
+			var index = 0; //记录播放到第几个point
+var car; //汽车图标
+var myIconStart = new BMap.Icon("img/map_record_list_start.png", new BMap.Size(30, 30));
+					car = new BMap.Marker(points[0], {
+						icon: myIconStart
+					});
+					
+					map.addOverlay(car);
+		mui.ajax({
+			data: {
+				systemNo: "LMVAFLEX9FA000031",
+				startTime: "2016-04-28 16:11:14",
+				endTime: "2016-05-03 17:00:32"
+			},
+			dataType: 'text', //服务器返回json格式数据
+			url: URLCarRoute + "GetPlaybackData",
+			type: 'post', //HTTP请求类型
+			timeout: 10000, //超时时间设置为10秒；
+			success: function(data) {
+				var jsondata1 = jsondatastr(data);
+				//	alert(jsondata1);
+				var vehicleArr = jsondata1[0].VehicleTrajectories;
+//				alert(vehicleArr[0].bLat);
+				for (var i = 0; i < vehicleArr.length; i++) {
+					console.log(vehicleArr[i].bLat);
+					console.log(vehicleArr[i].bLng);
+					//  			var marker = new BMap.Marker(new BMap.Point(vehicleArr[i].bLng, vehicleArr[i].bLat)); // 创建点
+					
+					mycars.push(new BMap.Point(vehicleArr[i].bLng, vehicleArr[i].bLat));
+					//	alert("1"); 
+				}
+				
+				var myP1 = mycars[0];    //起点
+				var myP2 = mycars[mycars.length - 1];    //终点
+		 var myIconStart = new BMap.Icon("img/map_record_list_start.png", new BMap.Size(30, 30));
+         var markerStart = new BMap.Marker(myP1, {icon: myIconStart}); 
+         map.addOverlay(markerStart);
+         var myIconEnd = new BMap.Icon("img/map_record_list_end.png", new BMap.Size(30, 30));
+         var markerEnd = new BMap.Marker(myP2, {icon: myIconEnd}); 
+         map.addOverlay(markerEnd);
+ 
+				var polyline = new BMap.Polyline(
+					mycars, {
+						strokeColor: "black",
+						strokeWeight: 5,
+						strokeOpacity: 0.5
+					}); //创建折线
+//				alert(mycars);
+//				alert(polyline);
+				map.addOverlay(polyline); //增加折线
+				//					route(data);
+			
+			},
+			error: function(xhr, type, errorThrown) {
+				//异常处理；
+				console.log(type);
+			}
+		}); 
+		
+		function play() {
+				
+				var point = mycars[index];
+				if (index > 0) {
+					map.addOverlay(new BMap.Polyline([mycars[index - 1], point], {
+						strokeColor: "red",
+						strokeWeight: 1,
+						strokeOpacity: 1
+					}));
+				}
+				//				label.setContent("经度: " + point.lng + "<br>纬度: " + point.lat);
+//				car.setPosition(point);
+				index++;
+//				if (followChk.checked) {
+//					map.panTo(point);
+//				}
+				if (index < mycars.length) {
+					timer = window.setTimeout("play(" + index + ")", 200);
+				} else {
+					
+					map.panTo(point);
+				}
+			}
+		//function route(date) {
+		//	var jsondata1 = jsondatastr(data);
+		//	alert(jsondata1);
+		//  	var	vehicleArr = jsondata1[0].VehicleTrajectories[0].Latitude;
+		//  		alert(vehicleArr);
+		////	console.log(vehicleArr);
+		//}
+		//添加覆盖物
+		//	function add_overlay(){
+		//		alert("data");
+		//		
+		//		map.addOverlay(polyline);          //增加折线
+		//		
+		//		
+		//		
+		//	}
+		//清除覆盖物
+		//	function remove_overlay(){
+		//		map.clearOverlays();         
+		//	}
+		
+		
+		
+		
+//	var myP2 = mycars[mycars.length - 1];    //终点
+//	var myIcon = new BMap.Icon("http://developer.baidu.com/map/jsdemo/img/car.png", new BMap.Size(32, 70), {    //小车图片
+//		//offset: new BMap.Size(0, -5),    //相当于CSS精灵
+//		imageOffset: new BMap.Size(0, 0)    //图片的偏移量。为了是图片底部中心对准坐标点。
+//	  });
+//	var driving2 = new BMap.DrivingRoute(map, {renderOptions:{map: map, autoViewport: true}});    //驾车实例
+//	driving2.search(myP1, myP2, {waypoints:mycars});    //显示一条公交线路
+//
+//	window.run = function (){
+//		var driving = new BMap.DrivingRoute(map);    //驾车实例
+//		driving.search(myP1, myP2, {waypoints:mycars});
+//		driving.setSearchCompleteCallback(function(){
+//			var pts = driving.getResults().getPlan(0).getRoute(0).getPath();    //通过驾车实例，获得一系列点的数组
+//			var paths = pts.length;    //获得有几个点
+//
+//			var carMk = new BMap.Marker(pts[0],{icon:myIcon});
+//			map.addOverlay(carMk);
+//			i=0;
+//			function resetMkPoint(i){
+//				carMk.setPosition(pts[i]);
+//				if(i < paths){
+//					setTimeout(function(){
+//						i++;
+//						resetMkPoint(i);
+//					},100);
+//				}
+//			}
+//			setTimeout(function(){
+//				resetMkPoint(5);
+//			},100)
+//
+//		});
+//	}
+//
+//	setTimeout(function(){
+//		run();
+//	},1500);
+	</script>
+
+</html>

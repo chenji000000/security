@@ -1,0 +1,65 @@
+{
+  "index.html": {
+    "resources": [
+      "js/common.js",
+      "js/jquery-1.11.1.min.js",
+      "js/mui.min.js",
+      "js/URL.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/update.js",
+      "js/mui.js",
+      "js/jquery.js"
+    ],
+    "refer": [
+      "tab-footer.html"
+    ]
+  },
+  "tab-footer.html": {
+    "refer": [
+      "home.html",
+      "alrm.html",
+      "setting.html",
+      "list.html"
+    ],
+    "resources": [
+      "home.html",
+      "js/mui.min.js",
+      "js/jquery-1.11.1.min.js",
+      "css/mui.min.css"
+    ]
+  },
+  "home.html": {
+    "resources": [
+      "img/banner_img1.jpg",
+      "img/banner_img2.jpg",
+      "css/layout.css",
+      "css/message.css",
+      "img/banner_img3.jpg",
+      "fonts/mui.ttf",
+      "js/common.js",
+      "js/URL.js"
+    ],
+    "refer": [
+      "FunctionModule/AQYJZ.html"
+    ]
+  },
+  "setting.html": {
+    "resources": [
+      "/js/jquery-1.11.1.min.js"
+    ]
+  },
+  "FunctionModule/AQYJZ.html": {
+    "resources": [
+      "FunctionModule/aqyj.html"
+    ],
+    "refer": [
+      "FunctionModule/aqyj.html"
+    ]
+  },
+  "FunctionModule/aqyj.html": {
+    "resources": [
+      "js/mui.js"
+    ]
+  }
+}

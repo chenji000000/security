@@ -1,0 +1,40 @@
+/*top*/
+.goods-icon{float:right;display: inline-block;height: 44px;padding-left:10px;]}
+.goods-icon img{width:24px; height: 24px; vertical-align: middle; display: block;margin-top:10px;}
+.left-icon{float:left;}
+.left-icon img{width:24px; height: 24px; vertical-align: middle; display: block;margin-top:10px;}
+
+.message-top{width:50%; margin:0 auto;}
+
+.message-bg{ background: #eee; overflow: hidden;}
+.message-con{margin-top: 10px;background: #fff;margin-bottom: 50px;}
+.message-a{padding:10px 2%; overflow: hidden;}
+.message-a-left{float:left;width: 20%;}
+.message-a-left i {display:block; float:left;width:60px; height:60px; border-radius:60px; }
+.message-a-left i img {display: block;width: 60px;height: 60px;border-radius: 60px;border:2px solid #fff;}
+.message-a-right{float:left;width:72%;border-bottom: 1px solid #eee;padding-bottom: 5px;}
+.message-a-right .mess-l{float:left;width:85%;display: inline-block;}
+.message-a-right .mess-l .mes-tit{color:#333;font-size: 14px;height:20px; overflow: hidden; line-height:20px; }
+.message-a-right .mess-l .mes-text{height: 20px; overflow: hidden; line-height: 20px;font-size: 14px;}
+.message-a-right .mess-r{float:right;width:15%;color:#666;font-size:13px;display: inline-block;}
+/*聊天窗口*/
+.message-window-right{ position:relative;float:right;width:72%; background:#e5e5e5; line-height: 30px; border-radius:5px;padding:4%;}
+.message-window-right i{ background:url(../images/widow_jt1.png) no-repeat left center;position: absolute; top:30px; left:-10px; width: 10px; height: 9px;display: inline-block;}
+.message-window-right span{font-size: 14px;color:#333;}
+
+.message-b{padding:10px 2%; overflow: hidden;}
+.message-b-right{float:right;width: 20%;}
+.message-b-right i {display:block; float:left;width:60px; height:60px; border-radius:60px; }
+.message-b-right i img {display: block;width: 60px;height: 60px;border-radius: 60px;border:2px solid #fff;}
+
+.message-window-left{ position:relative;float:left;width:72%; background:#ff9900; line-height: 30px; border-radius:5px;padding:4%;}
+.message-window-left i{ background:url(../images/widow_jt2.png) no-repeat left center;position: absolute; top:30px; right:-10px; width: 10px; height: 9px;display: inline-block;}
+.message-window-left span{font-size: 14px;color:#fff;}
+
+.message-footerbg{height: 60px; position: relative;}
+.message-footer{display: block; position: fixed;left:0;bottom:0;height:60px; width:100%; overflow: hidden; z-index: 200;color:#fff;padding: 10px 2%;background: #f8f8f8; border-top:1px solid #ccc;}
+.message-footer .mess-button{ background: #50a0ff;width:20%; text-align: center;display:inline-block;height:40px;font-size:18px;border-radius: 5px;float:right;border: 0;color:#fff;}
+.message-footer .mess-input{width:75%; border: 1px solid #eee; border-radius: 5px;height:40px; float:left; color: #666;}
+
+.mess-bor ul li:last-child{border-bottom: 0;}
+

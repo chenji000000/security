@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		
+    <title>首页</title>
+    <script src="js/mui.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/URL.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script> <!--jquery库-->
+    <link rel="stylesheet" href="css/mui.min.css">
+    <link href="css/mui.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="css/message.css">
+    	<link rel="stylesheet" href="css/layout.css">
+    		
+    <script type="text/javascript" charset="UTF-8">
+      mui.init();
+     
+      mui.plusReady(function(){
+      	      mui.ajax({
+				data:{argLoginName : "admin",
+                      argFilterNoPermissions : "True",
+                      argUserType : 2,
+				},
+                dataType:'text',//服务器返回json格式数据
+                url:URL + "GetPermissionFullByLoginName",
+				type:'post',//HTTP请求类型
+				timeout:10000,//超时时间设置为10秒；
+				success:function(data){
+						//服务器返回响应，根据响应结果，分析是否登录成功；
+						loadImage(data);
+					},
+				error:function(xhr,type,errorThrown){
+							//异常处理；
+				console.log(type);
+				}
+				
+			});
+});
+    </script>
+    
+    <style>
+    img{height: 200px;
+    }
+    .mui-content{
+    	background-color: #FAFAFA;
+    }
+    
+    </style>
+    
+</head>
+<body>
+
+	<div id="header" class="mui-bar mui-bar-nav">
+		   <!--<a onclick="back()" class="mui-icon-arrowleft mui-icon mui-icon-left-nav mui-pull-left"></a>-->
+		     <h3 id="title" class="mui-title">首页</h3> 
+	</div >
+	
+	<!--tab-bar-->
+	
+   
+	
+	
+	<div class="mui-content">
+		<div class="mui-slider " >
+            <div class="mui-slider-group">
+                    <div class="mui-slider-item">
+                    <a href="#">
+                        <img src="img/banner_img1.jpg">
+                        <p class="mui-slider-title">标题1</p>
+                    </a>
+                </div>
+                <div class="mui-slider-item">
+                    <a href="#">
+                        <img src="img/banner_img2.jpg">
+                        <p class="mui-slider-title">标题2</p>
+                    </a>
+                </div>
+                <div class="mui-slider-item">
+                    <a href="#">
+                        <img src="img/banner_img3.jpg">
+                        <p class="mui-slider-title">标题3</p>
+                    </a>
+                </div>
+            </div>
+            <!--注意这里面是图片滚动的标记，div的数量要和上面的匹配-->
+            <div class="mui-slider-indicator">
+                <div class="mui-indicator mui-active"></div>
+                <div class="mui-indicator"></div>
+                <div class="mui-indicator"></div>
+            </div>
+            <div class="mui-scroll-wrapper">
+	
+</div>   
+	</div>
+	
+<!--九宫格-->
+<div class="mui-content">
+	<ul id="nineView" class="mui-table-view mui-grid-view mui-grid-9">
+		            
+		        </ul>
+						
+		</div>
+					
+  
+
+
+	
+	
+    	<script>
+    
+    	var tubiao = null;
+    	var tableArr = null;
+    	function loadImage(data){
+    		var jsondata1 = jsondatastr(data);
+    		tableArr = jsondata1.Table;
+    		var menu = null;
+    		for (var i=0;i<tableArr.length;i++) {
+    			if (tableArr[i].pPath == "#1") {
+    				console.log(tableArr[i].pName);
+    				
+    				for (var j=0;j<tableArr.length;j++) {
+    					if (tableArr[j].pParentId == tableArr[i].pId) {
+    						tubiao = '<li id="'+tableArr[j].pPath+'" class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#"><span class="mui-icon mui-icon-home"></span><div class="mui-media-body">'+tableArr[j].pName+'</div></a></li>';
+    		                $("#nineView").append(tubiao);
+    					}
+    				}
+    			}
+    			
+    			
+    		}
+    		}
+    	
+    	mui(".mui-grid-view").on('tap','.mui-media',function(){
+    		
+    		var id = this.getAttribute('id');
+    		if (id == "com.ddqc.aqjk.fragment.WarningFragment") {
+    			clicked('FunctionModule/AQYJZ.html',true,false);
+    			
+    		}
+         
+    		if (id == "com.ddqc.aqjk.activity.PlayBackActivity") {    			
+    			clicked('route2.html',true,false);
+    			
+    		} 
+
+       })
+    	</script>
+	<script>
+   
+   
+
+
+
+    	
+    </script>
+	
+</body>
+</html>
